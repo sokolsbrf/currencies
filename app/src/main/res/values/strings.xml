@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CurrenciesDemo</string>
+
+    <string name="error_network_generic">При загрузке данных произошла ошибка</string>
+    <string name="error_network_parser">Не удалось разобрать полученный ответ</string>
+
+    <string name="format_currency_name_and_count">%1$.0f %2$s</string>
+    <string name="format_currency_value">= %1$.2f Р</string>
+</resources>
