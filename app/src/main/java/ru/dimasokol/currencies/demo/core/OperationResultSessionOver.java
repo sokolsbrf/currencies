@@ -2,9 +2,10 @@ package ru.dimasokol.currencies.demo.core;
 
 import java.util.List;
 
+import ru.dimasokol.currencies.demo.core.ui.UIMessage;
+
 /**
- * <p></p>
- * <p>Добавлено: 21.06.16</p>
+ * <p>Результат операции для завершившейся сессии</p>
  *
  * @author sokol
  */
@@ -30,17 +31,17 @@ public class OperationResultSessionOver implements OperationResult {
     }
 
     @Override
-    public void putError(String error) {
+    public void putMessage(UIMessage message) {
 
     }
 
     @Override
-    public boolean hasErrors() {
+    public boolean hasMessages() {
         return false;
     }
 
     @Override
-    public List<String> getErrors() {
+    public List<UIMessage> getMessages() {
         return null;
     }
 

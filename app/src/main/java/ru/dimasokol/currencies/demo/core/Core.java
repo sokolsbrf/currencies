@@ -49,6 +49,10 @@ public final class Core {
         return restartTask(uri, runner);
     }
 
+    /**
+     * Завершает работу ядра, зачищая все возможные ресурсы. После вызова этого метода попытки
+     * поставить задачу в очередь приведут к немедленному возврату результата завершённой сессии.
+     */
     public void shutdown() {
         if (mNetworkExecutor != null)
             mNetworkExecutor.shutdown();
@@ -61,7 +65,7 @@ public final class Core {
         Task task = mTasksByUri.get(uri);
 
         if (task != null) {
-
+            runTask(uri, task.getTaskRunner());
         }
     }
 

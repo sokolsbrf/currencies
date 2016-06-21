@@ -1,8 +1,7 @@
 package ru.dimasokol.currencies.demo.core;
 
 /**
- * <p></p>
- * <p>Добавлено: 20.06.16</p>
+ * <p>Интерфейс чего-либо, хранящего ядро и фасады модулей</p>
  *
  * @author sokol
  */

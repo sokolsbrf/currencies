@@ -15,11 +15,10 @@ import java.util.Date;
 
 import ru.dimasokol.currencies.demo.core.CoreHolder;
 import ru.dimasokol.currencies.demo.core.OperationResult;
-import ru.dimasokol.currencies.demo.core.OperationResultImpl;
 import ru.dimasokol.currencies.demo.core.OperationResultWrapper;
-import ru.dimasokol.currencies.demo.currencies.CurrenciesFacade;
-import ru.dimasokol.currencies.demo.currencies.LoadCurrenciesContent;
-import ru.dimasokol.currencies.demo.currencies.parsers.CurrenciesList;
+import ru.dimasokol.currencies.demo.modules.currencies.CurrenciesFacade;
+import ru.dimasokol.currencies.demo.modules.currencies.LoadCurrenciesContent;
+import ru.dimasokol.currencies.demo.modules.currencies.parsers.CurrenciesList;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<OperationResult> {
 
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         } else {
             showProgress(true);
-            // TODO: ошибки и завершение сессии
+            // TODO: ошибки и сообщения
         }
     }
 

@@ -1,6 +1,4 @@
-package ru.dimasokol.currencies.demo.currencies;
-
-import android.util.Log;
+package ru.dimasokol.currencies.demo.modules.currencies;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -8,6 +6,7 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -18,46 +17,38 @@ import ru.dimasokol.currencies.demo.R;
 import ru.dimasokol.currencies.demo.core.Content;
 import ru.dimasokol.currencies.demo.core.TaskRunner;
 import ru.dimasokol.currencies.demo.core.exceptions.RequestException;
+import ru.dimasokol.currencies.demo.core.networking.NetworkTaskRunner;
 import ru.dimasokol.currencies.demo.core.utils.DateFormatUtils;
 import ru.dimasokol.currencies.demo.core.utils.DoubleTransformer;
-import ru.dimasokol.currencies.demo.currencies.parsers.CurrenciesList;
+import ru.dimasokol.currencies.demo.modules.currencies.parsers.CurrenciesList;
 
 /**
- * <p></p>
- * <p>Добавлено: 20.06.16</p>
+ * <p>Задача загрузки списка валют за указанную дату</p>
  *
  * @author sokol
  */
-public class LoadCurrenciesRunner implements TaskRunner {
+public class LoadCurrenciesRunner extends NetworkTaskRunner {
 
     private Date mDate;
 
+    /**
+     * @param date Дата, на которую нужно грузить валюты; учитывается только день, месяц и год.
+     */
     public LoadCurrenciesRunner(Date date) {
+        super("http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + DateFormatUtils.dateForRequest(date));
         mDate = date;
     }
 
     @Override
-    public Content execute() throws RequestException {
-        try {
-            URL url = new URL("http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + DateFormatUtils.dateForRequest(mDate));
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    protected Content executeNetworkOperations(InputStream source) throws Exception {
+        RegistryMatcher m = new RegistryMatcher();
+        m.bind(Double.class, new DoubleTransformer());
+        Serializer serializer = new Persister(m);
 
-            RegistryMatcher m = new RegistryMatcher();
-            m.bind(Double.class, new DoubleTransformer());
-            Serializer serializer = new Persister(m);
-
-            CurrenciesList result = serializer.read(CurrenciesList.class, new BufferedReader(new InputStreamReader(connection.getInputStream(), Charset.forName("windows-1251"))));
-            connection.disconnect();
-
-            LoadCurrenciesContent content = new LoadCurrenciesContent();
-            content.set(result);
-            return content;
-
-        } catch (IOException e) {
-            throw new RequestException(e, R.string.error_network_generic);
-        } catch (Exception e) {
-            throw new RequestException(e, R.string.error_network_parser);
-        }
+        CurrenciesList result = serializer.read(CurrenciesList.class, new BufferedReader(new InputStreamReader(source, Charset.forName("windows-1251"))));
+        LoadCurrenciesContent content = new LoadCurrenciesContent();
+        content.set(result);
+        return content;
     }
 
     @Override

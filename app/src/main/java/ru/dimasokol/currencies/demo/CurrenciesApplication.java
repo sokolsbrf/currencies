@@ -8,7 +8,8 @@ import java.util.Map;
 import ru.dimasokol.currencies.demo.core.Core;
 import ru.dimasokol.currencies.demo.core.CoreHolder;
 import ru.dimasokol.currencies.demo.core.ModuleFacade;
-import ru.dimasokol.currencies.demo.currencies.CurrenciesFacade;
+import ru.dimasokol.currencies.demo.modules.currencies.CurrenciesFacade;
+import ru.dimasokol.currencies.demo.modules.history.HistoryFacade;
 
 /**
  * <p></p>
@@ -30,6 +31,7 @@ public class CurrenciesApplication extends Application implements CoreHolder {
 
         mFacades.clear();
         mFacades.put(CurrenciesFacade.NAME, new CurrenciesFacade(mCore));
+        mFacades.put(HistoryFacade.NAME, new HistoryFacade(mCore));
     }
 
     @Override

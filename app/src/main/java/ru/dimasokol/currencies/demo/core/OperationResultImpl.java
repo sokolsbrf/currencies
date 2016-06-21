@@ -1,8 +1,11 @@
 package ru.dimasokol.currencies.demo.core;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import ru.dimasokol.currencies.demo.core.ui.UIMessage;
 
 /**
  * <p></p>
@@ -16,7 +19,7 @@ public final class OperationResultImpl implements OperationResult {
     private volatile boolean mLoading;
     private volatile boolean mSessionOver;
     private volatile Content mContent;
-    private List<String> mErrors;
+    private List<UIMessage> mMessages;
 
     private Task mTask;
 
@@ -48,25 +51,25 @@ public final class OperationResultImpl implements OperationResult {
     }
 
     @Override
-    public synchronized void putError(String error) {
-        if (mErrors == null)
-            mErrors = new CopyOnWriteArrayList<>();
+    public void putMessage(UIMessage message) {
+        if (mMessages == null)
+            mMessages = new CopyOnWriteArrayList<>();
 
-        if (mErrors.indexOf(error) < 0)
-            mErrors.add(error);
+        if (mMessages.indexOf(message) < 0)
+            mMessages.add(message);
     }
 
     @Override
-    public synchronized boolean hasErrors() {
-        return mErrors != null;
+    public synchronized boolean hasMessages() {
+        return mMessages != null && mMessages.size() > 0;
     }
 
     @Override
-    public synchronized List<String> getErrors() {
-        if (mErrors == null)
+    public synchronized List<UIMessage> getMessages() {
+        if (mMessages == null)
             return null;
 
-        return Collections.unmodifiableList(mErrors);
+        return filterUnreadMessages();
     }
 
     @Override
@@ -77,7 +80,7 @@ public final class OperationResultImpl implements OperationResult {
     @Override
     public synchronized void setContent(Content content) {
         mContent = content;
-        mErrors = null;
+        mMessages = null;
     }
 
     @Override
@@ -108,15 +111,31 @@ public final class OperationResultImpl implements OperationResult {
                 .append(", mContent = ")
                 .append(System.identityHashCode(mContent));
 
-        if (mErrors == null) {
-            builder.append(", mErrors = null");
+        if (mMessages == null) {
+            builder.append(", mMessages = null");
         } else {
-            builder.append(", mErrors.size() = ")
-                    .append(mErrors.size());
+            builder.append(", mMessages.size() = ")
+                    .append(mMessages.size());
         }
 
         builder.append("}");
 
         return builder.toString();
+    }
+
+    private List<UIMessage> filterUnreadMessages() {
+        if (mMessages == null)
+            return null;
+
+        ArrayList<UIMessage> copy = new ArrayList<>(mMessages.size());
+
+        for (UIMessage message: mMessages) {
+            if (message.isConsidered())
+                continue;
+
+            copy.add(message);
+        }
+
+        return Collections.unmodifiableList(copy);
     }
 }

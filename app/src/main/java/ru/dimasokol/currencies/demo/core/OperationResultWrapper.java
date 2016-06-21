@@ -2,9 +2,12 @@ package ru.dimasokol.currencies.demo.core;
 
 import java.util.List;
 
+import ru.dimasokol.currencies.demo.core.ui.UIMessage;
+
 /**
- * <p></p>
- * <p>Добавлено: 21.06.16</p>
+ * Обёртка для другого {@link OperationResult}, напрямую пробрасывающая все вызовы к нему. Этот
+ * класс необходим потому, что стандартный LoaderManager требует именно изменения ссылки на контент,
+ * а {@link Task} всегда возвращает один и тот же {@code OperationResult}.
  *
  * @author sokol
  */
@@ -37,18 +40,18 @@ public final class OperationResultWrapper implements OperationResult {
     }
 
     @Override
-    public void putError(String error) {
-        mSource.putError(error);
+    public void putMessage(UIMessage message) {
+        mSource.putMessage(message);
     }
 
     @Override
-    public boolean hasErrors() {
-        return mSource.hasErrors();
+    public boolean hasMessages() {
+        return mSource.hasMessages();
     }
 
     @Override
-    public List<String> getErrors() {
-        return mSource.getErrors();
+    public List<UIMessage> getMessages() {
+        return mSource.getMessages();
     }
 
     @Override

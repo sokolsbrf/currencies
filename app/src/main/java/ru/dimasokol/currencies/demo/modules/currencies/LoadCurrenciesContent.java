@@ -1,7 +1,7 @@
-package ru.dimasokol.currencies.demo.currencies;
+package ru.dimasokol.currencies.demo.modules.currencies;
 
 import ru.dimasokol.currencies.demo.core.Content;
-import ru.dimasokol.currencies.demo.currencies.parsers.CurrenciesList;
+import ru.dimasokol.currencies.demo.modules.currencies.parsers.CurrenciesList;
 
 /**
  * <p></p>

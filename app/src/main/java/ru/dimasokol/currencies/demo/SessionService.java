@@ -2,15 +2,11 @@ package ru.dimasokol.currencies.demo;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.IBinder;
-
-import java.util.Date;
 
 import ru.dimasokol.currencies.demo.core.Core;
 import ru.dimasokol.currencies.demo.core.CoreHolder;
-import ru.dimasokol.currencies.demo.core.OperationResult;
-import ru.dimasokol.currencies.demo.currencies.CurrenciesFacade;
+import ru.dimasokol.currencies.demo.modules.currencies.CurrenciesFacade;
 
 public class SessionService extends Service {
 

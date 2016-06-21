@@ -1,8 +1,7 @@
 package ru.dimasokol.currencies.demo.core;
 
 /**
- * <p></p>
- * <p>Добавлено: 20.06.16</p>
+ * <p>Загруженный контент любого типа</p>
  *
  * @author sokol
  */

@@ -1,6 +1,11 @@
 package ru.dimasokol.currencies.demo.core.exceptions;
 
+import android.content.Context;
 import android.support.annotation.StringRes;
+
+import ru.dimasokol.currencies.demo.core.ui.Error;
+import ru.dimasokol.currencies.demo.core.ui.FatalError;
+import ru.dimasokol.currencies.demo.core.ui.UIMessage;
 
 /**
  * <p></p>
@@ -34,5 +39,12 @@ public class RequestException extends BaseException {
 
     public void setFatal(boolean fatal) {
         mFatal = fatal;
+    }
+
+    public UIMessage getUIMessage(Context context) {
+        if (isFatal())
+            return new FatalError(getString(context));
+
+        return new Error(getString(context));
     }
 }

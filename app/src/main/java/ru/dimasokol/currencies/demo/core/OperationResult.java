@@ -2,6 +2,8 @@ package ru.dimasokol.currencies.demo.core;
 
 import java.util.List;
 
+import ru.dimasokol.currencies.demo.core.ui.UIMessage;
+
 /**
  * <p></p>
  * <p>Добавлено: 21.06.16</p>
@@ -17,11 +19,11 @@ public interface OperationResult {
 
     void setLoading(boolean loading);
 
-    void putError(String error);
+    void putMessage(UIMessage message);
 
-    boolean hasErrors();
+    boolean hasMessages();
 
-    List<String> getErrors();
+    List<UIMessage> getMessages();
 
     Content getContent();
 

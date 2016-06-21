@@ -1,4 +1,4 @@
-package ru.dimasokol.currencies.demo.currencies.parsers;
+package ru.dimasokol.currencies.demo.modules.currencies.parsers;
 
 import android.support.annotation.Nullable;
 

@@ -2,14 +2,16 @@ package ru.dimasokol.currencies.demo.core;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 
 import ru.dimasokol.currencies.demo.core.exceptions.RequestException;
 
 /**
- * <p></p>
- * <p>Добавлено: 20.06.16</p>
+ * <p>Связанная с URI задача, выполняющаяся или выполненная; в последнем случае превращается
+ * фактически в хранилище результата запроса.</p>
+ * <p>Для получения результата и статуса исполнения служит метод {@link #getOperationResult()}.</p>
  *
  * @author sokol
  */
@@ -24,7 +26,13 @@ public final class Task implements Runnable {
 
     private WeakReference<Core> mCoreWeakReference;
 
-    public Task(Core core, Uri contentUri, TaskRunner taskRunner) {
+    /**
+     * Создание новой задачи для указанного {@link Core ядра}.
+     * @param core Ядро. Должно быть инициализировано и запущено, хотя этот факт не проверяется.
+     * @param contentUri URI контента (<strong>не</strong> адрес для сетевого запроса, внутренний)
+     * @param taskRunner Класс-исполнитель задачи; вся логика возложена на него.
+     */
+    public Task(@NonNull Core core, @NonNull Uri contentUri, @NonNull TaskRunner taskRunner) {
         mContentUri = contentUri;
         mContext = core.getContext();
         mOperationResult = new OperationResultImpl(this);
@@ -33,6 +41,12 @@ public final class Task implements Runnable {
         mCoreWeakReference = new WeakReference<>(core);
     }
 
+    /**
+     * Возвращает результат операции для данного таска. Для отдельно взятого таска этот объект
+     * не меняется, а потому не требует вызова этого метода каждый раз, зато требует осторожности
+     * в части хранения ссылок на него (и, косвенно, на таск и данные).
+     * @return {@link OperationResult} с данными или без них.
+     */
     public final OperationResult getOperationResult() {
         synchronized (mOperationResult) {
             return mOperationResult;
@@ -57,7 +71,7 @@ public final class Task implements Runnable {
             mOperationResult.setContent(content);
 
         } catch (RequestException e) {
-            mOperationResult.putError(e.getString(mContext));
+            mOperationResult.putMessage(e.getUIMessage(mContext));
         } finally {
             mRunning = false;
             mOperationResult.setLoading(false);
@@ -65,6 +79,10 @@ public final class Task implements Runnable {
         }
     }
 
+    /**
+     * Помечает задачу как «грязную» и требующую перезапуска; метод необходим для вызова из
+     * {@link OperationResult}.
+     */
     void markAsDirty() {
         Core core = mCoreWeakReference.get();
 

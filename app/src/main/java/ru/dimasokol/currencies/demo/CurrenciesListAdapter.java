@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ru.dimasokol.currencies.demo.currencies.parsers.CurrenciesList;
-import ru.dimasokol.currencies.demo.currencies.parsers.Currency;
+import ru.dimasokol.currencies.demo.modules.currencies.parsers.CurrenciesList;
+import ru.dimasokol.currencies.demo.modules.currencies.parsers.Currency;
 
 
 /**

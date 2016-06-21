@@ -1,8 +1,6 @@
-package ru.dimasokol.currencies.demo.currencies;
+package ru.dimasokol.currencies.demo.modules.currencies;
 
-import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 
 import java.util.Date;
 import java.util.List;
@@ -12,8 +10,7 @@ import ru.dimasokol.currencies.demo.core.ModuleFacade;
 import ru.dimasokol.currencies.demo.core.OperationResult;
 
 /**
- * <p></p>
- * <p>Добавлено: 20.06.16</p>
+ * <p>Фасад модуля загрузки списка валют</p>
  *
  * @author sokol
  */
@@ -32,6 +29,11 @@ public class CurrenciesFacade extends ModuleFacade {
         return null;
     }
 
+    /**
+     * Начинает загрузку валют или возвращает данные, хранящиеся в ядре.
+     * @param date Дата для получения списка валют
+     * @return Результат операции
+     */
     public OperationResult getCurrencies(Date date) {
         return getCore().runTask(URI_CURRENCIES, new LoadCurrenciesRunner(date));
     }
