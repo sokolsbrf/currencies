@@ -13,9 +13,11 @@ import ru.dimasokol.currencies.demo.core.ui.UIMessage;
 public interface OperationResult {
     boolean isDirty();
 
-    void setDirty(boolean dirty);
+    void markAsDirty();
 
     boolean isLoading();
+
+    boolean isFailed();
 
     void setLoading(boolean loading);
 

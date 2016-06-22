@@ -16,7 +16,7 @@ import ru.dimasokol.currencies.demo.core.ui.UIMessage;
 public final class OperationResultImpl implements OperationResult {
 
     private volatile boolean mDirty;
-    private volatile boolean mLoading;
+    private volatile boolean mLoading = true;   // С нуля мы в состоянии загрузки
     private volatile boolean mSessionOver;
     private volatile Content mContent;
     private List<UIMessage> mMessages;
@@ -33,16 +33,19 @@ public final class OperationResultImpl implements OperationResult {
     }
 
     @Override
-    public synchronized void setDirty(boolean dirty) {
-        mDirty = dirty;
-
-        if (dirty)
-            mTask.markAsDirty();
+    public synchronized void markAsDirty() {
+        mDirty = true;
+        mTask.markAsDirty();
     }
 
     @Override
     public synchronized boolean isLoading() {
         return mLoading;
+    }
+
+    @Override
+    public boolean isFailed() {
+        return !isLoading() && mContent == null;
     }
 
     @Override

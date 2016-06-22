@@ -25,13 +25,18 @@ public final class OperationResultWrapper implements OperationResult {
     }
 
     @Override
-    public void setDirty(boolean dirty) {
-        mSource.setDirty(dirty);
+    public void markAsDirty() {
+        mSource.markAsDirty();
     }
 
     @Override
     public boolean isLoading() {
         return mSource.isLoading();
+    }
+
+    @Override
+    public boolean isFailed() {
+        return mSource.isFailed();
     }
 
     @Override

@@ -16,13 +16,18 @@ public class OperationResultSessionOver implements OperationResult {
     }
 
     @Override
-    public void setDirty(boolean dirty) {
+    public void markAsDirty() {
 
     }
 
     @Override
     public boolean isLoading() {
         return false;
+    }
+
+    @Override
+    public boolean isFailed() {
+        return true;
     }
 
     @Override

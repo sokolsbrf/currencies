@@ -38,18 +38,18 @@ public class UIMessage implements Serializable {
     }
 
     private final Severity mSeverity;
-    private final String mMessage;
+    private final String mText;
     private String mTag;
     private boolean mConsidered = false;
 
     /**
      * Создание нового экземпляра сообщения с указанием серьёзности и текста
      * @param severity Серьёзность сообщения
-     * @param message Текст сообщения
+     * @param text Текст сообщения
      */
-    public UIMessage(Severity severity, String message) {
+    public UIMessage(Severity severity, String text) {
         mSeverity = severity;
-        mMessage = message;
+        mText = text;
     }
 
     /**
@@ -63,8 +63,8 @@ public class UIMessage implements Serializable {
     /**
      * Возвращает сам текст сообщения
      */
-    public String getMessage() {
-        return mMessage;
+    public String getText() {
+        return mText;
     }
 
     /**

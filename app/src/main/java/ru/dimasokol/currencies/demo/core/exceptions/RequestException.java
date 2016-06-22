@@ -15,7 +15,7 @@ import ru.dimasokol.currencies.demo.core.ui.UIMessage;
  */
 public class RequestException extends BaseException {
 
-    private boolean mFatal = true;
+    private boolean mFatal = false;
 
     public RequestException(@StringRes int errorStringResource) {
         super(errorStringResource);
