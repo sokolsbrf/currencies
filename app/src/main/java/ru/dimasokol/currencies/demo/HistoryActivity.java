@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ public class HistoryActivity extends AppCompatActivity {
     private ImageView mTestImageView;
 
     private HistoryFacade mHistoryFacade;
+    private ProgressToOkayDrawable mDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +25,16 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         mTestImageView = (ImageView) findViewById(R.id.imageView);
-        ProgressToOkayDrawable drawable = new ProgressToOkayDrawable(mTestImageView, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6f, getResources().getDisplayMetrics()));
-        mTestImageView.setImageDrawable(drawable);
-        drawable.start();
+        mDrawable = new ProgressToOkayDrawable(mTestImageView, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6f, getResources().getDisplayMetrics()));
+        mTestImageView.setImageDrawable(mDrawable);
+        mDrawable.start();
+
+        mTestImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawable.okay();
+            }
+        });
 
         Log.d("History", "Started: " + getIntent().getData());
 
