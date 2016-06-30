@@ -1,6 +1,7 @@
 package ru.dimasokol.currencies.demo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

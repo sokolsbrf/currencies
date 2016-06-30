@@ -49,4 +49,17 @@ public class CurrencyHistory {
     public List<HistoryRecord> getHistory() {
         return mHistory;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("CurrencyHistory ");
+        builder.append(System.identityHashCode(this)).append(" {");
+        builder.append("id = ").append(id);
+        builder.append(", from = ").append(fromDate.toString());
+        builder.append(", to = ").append(toDate.toString());
+        builder.append(", name = ").append(name);
+        builder.append(", history size = ").append(mHistory.size()).append("}");
+
+        return builder.toString();
+    }
 }

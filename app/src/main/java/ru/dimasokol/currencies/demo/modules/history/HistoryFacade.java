@@ -2,10 +2,12 @@ package ru.dimasokol.currencies.demo.modules.history;
 
 import android.net.Uri;
 
+import java.util.Date;
 import java.util.List;
 
 import ru.dimasokol.currencies.demo.core.Core;
 import ru.dimasokol.currencies.demo.core.ModuleFacade;
+import ru.dimasokol.currencies.demo.core.OperationResult;
 
 /**
  * <p></p>
@@ -29,7 +31,8 @@ public class HistoryFacade extends ModuleFacade {
         return null;
     }
 
-    public Uri buildHistoryUri(String currencyId) {
-        return Uri.parse(FORMAT_URI_STRING + "/" + currencyId);
+    public OperationResult getCurrencyHistory(String currencyCode, Date from, Date to) {
+        Uri uri = Uri.withAppendedPath(URI_ALL_HISTORIES, currencyCode);
+        return getCore().runTask(uri, new LoadHistoryRunner(from, to, currencyCode));
     }
 }

@@ -1,5 +1,7 @@
 package ru.dimasokol.currencies.demo;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 
 import ru.dimasokol.currencies.demo.modules.currencies.parsers.CurrenciesList;
 import ru.dimasokol.currencies.demo.modules.currencies.parsers.Currency;
+import ru.dimasokol.currencies.demo.modules.history.HistoryFacade;
 
 
 /**
@@ -36,6 +39,7 @@ public class CurrenciesListAdapter extends RecyclerView.Adapter<CurrenciesListAd
         Currency currency = mCurrenciesList.getCurrencies().get(position);
         holder.mCurrencyNameView.setText(holder.itemView.getContext().getString(R.string.format_currency_name_and_count, currency.getNominal(), currency.getName()));
         holder.mCurrencyValueView.setText(holder.itemView.getContext().getString(R.string.format_currency_value, currency.getValue()));
+        holder.itemView.setOnClickListener(new ItemClickListenerImpl(mCurrenciesList.getCurrencies().get(position).getId()));
     }
 
     @Override
@@ -52,6 +56,22 @@ public class CurrenciesListAdapter extends RecyclerView.Adapter<CurrenciesListAd
             super(itemView);
             mCurrencyNameView = (TextView) itemView.findViewById(R.id.text_currency_name_and_count);
             mCurrencyValueView = (TextView) itemView.findViewById(R.id.text_currency_value);
+        }
+    }
+
+    private static class ItemClickListenerImpl implements View.OnClickListener {
+
+        private String mCurrencyCode;
+
+        public ItemClickListenerImpl(String currencyCode) {
+            mCurrencyCode = currencyCode;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.withAppendedPath(HistoryFacade.URI_ALL_HISTORIES, mCurrencyCode));
+            v.getContext().startActivity(intent);
         }
     }
 
